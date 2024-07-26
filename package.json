@@ -1,0 +1,19 @@
+{
+  "name": "swibly-sdk",
+  "version": "0.0.3",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "swibly"
+  ],
+  "author": "devkcud",
+  "license": "MIT",
+  "description": "SDK for the Swibly project.",
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "typescript": "^5.5.4"
+  }
+}
