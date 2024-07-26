@@ -19,7 +19,26 @@ export class SwiblyAPI {
     });
   }
 
-  public async validateAPIKey(): Promise<string> {
-    return (await this._fetch('GET', endpoint(0, 'healthcare'))).ok ? 'OK' : 'Bad API key';
+  /**
+   * Checks if the API key is valid. Throws an error if the API key is invalid.
+   */
+  public async validateAPIKey(): Promise<void> {
+    if (!(await this.safeValidateAPIKey())) {
+      throw new Error('Bad API key');
+    }
+  }
+
+  /**
+   * Checks if the API key is valid safely without throwing an error.
+   * True if the API key is valid, false if the API key is invalid.
+   */
+  public async safeValidateAPIKey(): Promise<boolean> {
+    try {
+      const response = await this._fetch('GET', endpoint(0, 'healthcare'));
+      return response.status === 200;
+    } catch (error) {
+      console.error('Failed to validate API key:', error);
+      return false; // In case of network errors, consider the API key invalid.
+    }
   }
 }
