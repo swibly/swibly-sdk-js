@@ -9,11 +9,12 @@
     "target": "ESNext",
     "experimentalDecorators": true,
 
+    "esModuleInterop": true,
     "outDir": "./dist/",
     "declaration": true,
     "removeComments": true,
     "pretty": false
   },
   "include": ["./src/**/*"],
-  "exclude": ["./node_modules/**/*", "./dist/**/*", "./test/**/*", "./.vscode/**/*"]
+  "exclude": ["./node_modules/**/*", "./dist/**/*", "tests/**/*", "./.vscode/**/*", "./.env*"]
 }
