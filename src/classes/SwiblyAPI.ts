@@ -1,4 +1,5 @@
 import { generateEndpoint } from '../utils/endpoint';
+import { AuthModule } from './modules/Auth';
 
 export default class SwiblyAPI {
   constructor(private key: string) {
@@ -23,5 +24,15 @@ export default class SwiblyAPI {
     } catch (error) {
       return false;
     }
+  }
+
+  /**
+   * Returns an instance of the AuthModule class initialized with the current API key, which can be used to make
+   * auth related requests like `login`, `register`, etc.
+   *
+   * @return {AuthModule} An instance of the AuthModule class.
+   */
+  public get auth(): AuthModule {
+    return new AuthModule(this.key);
   }
 }
