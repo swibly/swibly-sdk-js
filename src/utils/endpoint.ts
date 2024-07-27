@@ -1,9 +1,14 @@
-import { API_ENDPOINT } from './config';
+const API_ENDPOINT: string = 'https://api.swibly.org';
 
-export function unslash(path: string) {
+type EndpointOptions = {
+  readonly version?: number;
+  readonly path: string;
+};
+
+function unslash(path: string): string {
   return path.replace(/^\/*|\/*$/gi, '');
 }
 
-export function endpoint(version: number, path: string) {
-  return `${API_ENDPOINT}${version > 0 ? `/v${version}` : ''}/${unslash(path)}`;
+export function generateEndpoint({ version, path }: EndpointOptions): string {
+  return `${API_ENDPOINT}${version && version > 0 ? `/v${version}` : ''}/${unslash(path)}`;
 }
