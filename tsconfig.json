@@ -12,7 +12,7 @@
     "esModuleInterop": true,
     "outDir": "./dist/",
     "declaration": true,
-    "removeComments": true,
+    "removeComments": false,
     "pretty": false
   },
   "include": ["./src/**/*"],
