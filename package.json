@@ -1,10 +1,11 @@
 {
   "name": "swibly-sdk",
-  "version": "0.0.3-test",
+  "version": "0.0.4",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
     "build": "tsc",
+    "deploy": "npm run build && npm publish",
     "test": "jest"
   },
   "keywords": [
