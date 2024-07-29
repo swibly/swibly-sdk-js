@@ -1,7 +1,19 @@
 import { generateEndpoint } from '../utils/endpoint';
-import { AuthModule } from './modules/Auth';
+import { AuthModule } from './modules/auth';
 
+/**
+ * Class representing a Swibly API client.
+ *
+ * @class
+ */
 export default class SwiblyAPI {
+  /**
+   * Creates a new instance of SwiblyAPI.
+   *
+   * @constructor
+   * @param {string} key - The API key used for authentication.
+   * @throws {Error} If the API key is missing or empty.
+   */
   constructor(private key: string) {
     if (!key || key.trim().length === 0) {
       throw new Error('Missing API key');
@@ -11,7 +23,7 @@ export default class SwiblyAPI {
   /**
    * Checks if the API is reachable by making a request to the healthcare endpoint using the provided API key.
    *
-   * @return {Promise<boolean>} A Promise that resolves to a boolean indicating if the API is reachable or not.
+   * @return {Promise<boolean>} A Promise that resolves to a boolean indicating if the API is reachable (true) or not (false).
    */
   public async canConnect(): Promise<boolean> {
     try {
