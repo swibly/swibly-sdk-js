@@ -1,4 +1,4 @@
-const API_ENDPOINT: string = 'https://api.swibly.org';
+const API_ENDPOINT: string = 'https://api.swibly.com.br';
 
 type EndpointOptions = {
   readonly version?: number;
