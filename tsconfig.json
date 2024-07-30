@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
 
     "esModuleInterop": true,
-    "outDir": "./dist/",
+    "outDir": "./dist",
     "declaration": true,
     "removeComments": false,
     "pretty": false

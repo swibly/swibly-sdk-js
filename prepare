@@ -1,0 +1,27 @@
+#!/bin/bash
+outdir=$(cat tsconfig.json | jq -r '.compilerOptions.outDir')
+
+if [ -z "$outdir" ] || [ "$outdir" == "null" ]; then
+  echo "Error: outDir not found in tsconfig.json"
+  exit 1
+fi
+
+prepared="$outdir.prepared"
+
+# remove old files
+rm -rf "$outdir"
+rm -rf "$prepared"
+
+npm run build # will generate $outdir
+
+echo "Successfully prepared the project"
+
+mkdir -p "$prepared"
+
+mv "$outdir" "$prepared"
+
+jq '{name,description,version,keywords,main,types,files,author,license}' package.json > "$prepared/package.json"
+
+cd "$prepared"
+
+npm publish
