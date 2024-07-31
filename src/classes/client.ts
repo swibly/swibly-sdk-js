@@ -1,25 +1,12 @@
-import { generateEndpoint } from '../utils/endpoint';
-import { AuthModule } from './modules/auth';
+import { GenericModule } from '../utils/modular';
+import { AuthModule } from './auth';
 
 /**
  * Class representing a Swibly API client.
  *
  * @class
  */
-export default class SwiblyAPI {
-  /**
-   * Creates a new instance of SwiblyAPI.
-   *
-   * @constructor
-   * @param {string} key - The API key used for authentication.
-   * @throws {Error} If the API key is missing or empty.
-   */
-  constructor(private key: string) {
-    if (!key || key.trim().length === 0) {
-      throw new Error('Missing API key');
-    }
-  }
-
+export class SwiblyClient extends GenericModule {
   /**
    * Checks if the API is reachable by making a request to the healthcare endpoint using the provided API key.
    *
@@ -27,12 +14,7 @@ export default class SwiblyAPI {
    */
   public async canConnect(): Promise<boolean> {
     try {
-      const response = await fetch(generateEndpoint({ path: 'healthcare' }), {
-        method: 'GET',
-        headers: { 'X-API-KEY': this.key },
-      });
-
-      return response.ok;
+      return (await this.r_GET({ version: 0, path: 'healthcare' })).ok;
     } catch (error) {
       return false;
     }
@@ -46,5 +28,26 @@ export default class SwiblyAPI {
    */
   public get auth(): AuthModule {
     return new AuthModule(this.key);
+  }
+}
+
+/**
+ * Class representing a Swibly API client.
+ *
+ * @class
+ * @deprecated This class is deprecated and will be removed in future versions. Use {@link SwiblyClient} instead.
+ */
+export class SwiblyAPI extends SwiblyClient {
+  /**
+   * Creates an instance of SwiblyAPI.
+   *
+   * @param {string} key - The API key.
+   * @memberof SwiblyAPI
+   */
+  constructor(key: string) {
+    super(key);
+    console.warn(
+      'SwiblyAPI is deprecated and will be removed in future versions. Use SwiblyClient instead.',
+    );
   }
 }

@@ -1,3 +1,3 @@
-import SwiblyAPI from './classes/SwiblyAPI';
+import { SwiblyAPI, SwiblyClient } from './classes/client';
 
-export { SwiblyAPI };
+export { SwiblyAPI, SwiblyClient };

@@ -1,14 +1,56 @@
-const API_ENDPOINT: string = 'https://api.swibly.com.br';
+export type EndpointOptions = Partial<{
+  path: string;
+  group: string;
+  version: number;
+}>;
 
-type EndpointOptions = {
-  readonly version?: number;
-  readonly path: string;
-};
+export class Endpoint {
+  private path = '';
+  private group = '';
+  private version = 1;
 
-function unslash(path: string): string {
-  return path.replace(/^\/*|\/*$/gi, '');
-}
+  constructor(initialConfiguration?: EndpointOptions) {
+    if (initialConfiguration) {
+      Object.assign(this, initialConfiguration);
+    }
+  }
 
-export function generateEndpoint({ version, path }: EndpointOptions): string {
-  return `${API_ENDPOINT}${version && version > 0 ? `/v${version}` : ''}/${unslash(path)}`;
+  public withPath(path: string): Endpoint {
+    this.path = path;
+    return this;
+  }
+
+  public withGroup(group: string): Endpoint {
+    this.group = group;
+    return this;
+  }
+
+  public withVersion(version: number): Endpoint {
+    this.version = version;
+    return this;
+  }
+
+  public build(): string {
+    const unslash = (str: string) => str.replace(/\/$/, '');
+
+    let finalEndpoint = 'https://api.swibly.com.br';
+
+    if (this.version > 0) {
+      finalEndpoint += `/v${this.version}`;
+    }
+
+    if (this.group.trim() !== '') {
+      finalEndpoint += `/${unslash(this.group)}`;
+    }
+
+    if (this.path.trim() !== '') {
+      finalEndpoint += `/${unslash(this.path)}`;
+    }
+
+    return finalEndpoint;
+  }
+
+  public static from(initialConfiguration?: EndpointOptions): string {
+    return new Endpoint(initialConfiguration).build();
+  }
 }
