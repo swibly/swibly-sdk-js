@@ -11,11 +11,9 @@ export type GenericAPIReturn = {
  * Represents the response from the auth API.
  * It can either contain a message, a token and a success message, or an error message.
  */
-export type GenericTokenAPIReturn = {
-  message?: string;
+export type GenericTokenAPIReturn = GenericAPIReturn & {
   /** JWT token resulted from an auth action like login or register. */
   token?: string;
-  error?: GenericAPIError;
 };
 
 /**
