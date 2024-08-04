@@ -14,7 +14,7 @@ export class SwiblyClient extends GenericModule {
    */
   public async canConnect(): Promise<boolean> {
     try {
-      return (await this.r_GET({ version: 0, path: 'healthcare' })).ok;
+      return (await this.r_GET({ version: 0, path: 'healthcare' }, { 'X-Lang': this.lang })).ok;
     } catch (error) {
       return false;
     }
@@ -27,7 +27,7 @@ export class SwiblyClient extends GenericModule {
    * @return {AuthModule} An instance of the AuthModule class.
    */
   public get auth(): AuthModule {
-    return new AuthModule(this.key);
+    return new AuthModule(this.key, this.lang);
   }
 }
 
