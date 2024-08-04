@@ -1,4 +1,5 @@
 import { Endpoint, EndpointOptions } from './endpoint';
+import { SwiblyClientOptions } from './typings/client';
 import { ValidAPILanguages } from './typings/generic';
 
 type _allowedMethods = 'POST' | 'GET' | 'PATCH' | 'DELETE';
@@ -9,17 +10,28 @@ type _allowedMethods = 'POST' | 'GET' | 'PATCH' | 'DELETE';
  * @protected
  */
 export class GenericModule {
+  private _key: string = '';
+  private _lang: ValidAPILanguages = 'pt';
+
   /**
-   * Creates an instance.
+   * Creates an instance of the module.
    *
-   * @param {string} _key - The API key.
-   * @param {ValidAPILanguages} _lang - The language to use. Defaults to 'pt'.
+   * @constructor
+   * @param {SwiblyClientOptions} options - The options for the module.
+   * @param {string} options.key - The API key for the module.
+   * @param {ValidAPILanguages} [options.lang='pt'] - The language to use for the module.
+   * @throws {Error} If the API key is missing or empty.
    * @memberof GenericModule
    */
-  constructor(private _key: string, private _lang: ValidAPILanguages = 'pt') {
-    if (!_key || _key.trim().length === 0) {
+  constructor(options: SwiblyClientOptions) {
+    const { key, lang } = options;
+
+    if (!key || key.trim().length === 0) {
       throw new Error('Missing API key');
     }
+
+    this._key = key;
+    this._lang = lang || 'pt';
   }
 
   /**

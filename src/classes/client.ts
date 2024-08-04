@@ -27,7 +27,7 @@ export class SwiblyClient extends GenericModule {
    * @return {AuthModule} An instance of the AuthModule class.
    */
   public get auth(): AuthModule {
-    return new AuthModule(this.key, this.lang);
+    return new AuthModule({ key: this.key, lang: this.lang });
   }
 }
 
@@ -45,7 +45,7 @@ export class SwiblyAPI extends SwiblyClient {
    * @memberof SwiblyAPI
    */
   constructor(key: string) {
-    super(key);
+    super({ key, lang: 'pt' });
     console.warn(
       'SwiblyAPI is deprecated and will be removed in future versions. Use SwiblyClient instead.',
     );
