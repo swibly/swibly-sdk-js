@@ -1,5 +1,15 @@
 #!/bin/bash
-outdir=$(cat tsconfig.json | jq -r '.compilerOptions.outDir')
+
+deploy=false
+
+while getopts ":d" option; do
+  case $option in
+    d) deploy=true;;
+    \?) echo "Invalid option: -$OPTARG" >&2;;
+  esac
+done
+
+outdir=$(jq -r '.compilerOptions.outDir' tsconfig.json)
 
 if [ -z "$outdir" ] || [ "$outdir" == "null" ]; then
   echo "Error: outDir not found in tsconfig.json"
@@ -17,11 +27,13 @@ npm run build # will generate $outdir
 echo "Successfully prepared the project"
 
 mkdir -p "$prepared"
-
 mv "$outdir" "$prepared"
 
 jq '{name,description,version,keywords,main,types,files,author,license}' package.json > "$prepared/package.json"
 
-cd "$prepared"
+if [ "$deploy" = true ]; then
+  cd "$prepared"
+  npm publish
 
-npm publish
+  echo "Published to npm"
+fi
