@@ -3,11 +3,10 @@
   "compilerOptions": {
     "strict": true,
 
-    "lib": ["ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "lib": ["ESNext", "ES6"],
     "target": "ESNext",
-    "experimentalDecorators": true,
+    "module": "Node16",
+    "moduleResolution": "Node16",
 
     "esModuleInterop": true,
     "outDir": "./dist",
