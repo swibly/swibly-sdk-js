@@ -1,5 +1,6 @@
 import { GenericModule } from '../utils/modular';
 import { AuthModule } from './auth';
+import { SearchModule } from './search';
 
 /**
  * Class representing a Swibly API client.
@@ -28,6 +29,10 @@ export class SwiblyClient extends GenericModule {
    */
   public get auth(): AuthModule {
     return new AuthModule({ key: this.key, lang: this.lang });
+  }
+
+  public get search(): SearchModule {
+    return new SearchModule({ key: this.key, lang: this.lang });
   }
 }
 

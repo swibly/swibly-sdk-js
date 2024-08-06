@@ -2,12 +2,14 @@ export type EndpointOptions = Partial<{
   path: string;
   group: string;
   version: number;
+  params: Record<string, any>;
 }>;
 
 export class Endpoint {
   private path = '';
   private group = '';
   private version = 1;
+  private params: Record<string, any> = {};
 
   constructor(initialConfiguration?: EndpointOptions) {
     if (initialConfiguration) {
@@ -30,6 +32,11 @@ export class Endpoint {
     return this;
   }
 
+  public withParams(params: Record<string, any>) {
+    this.params = params;
+    return this;
+  }
+
   public build(): string {
     const unslash = (str: string) => str.replace(/\/$/, '');
 
@@ -47,7 +54,23 @@ export class Endpoint {
       finalEndpoint += `/${unslash(this.path)}`;
     }
 
-    return finalEndpoint;
+    if (JSON.stringify(this.params) !== '{}') {
+      finalEndpoint += '?';
+
+      const p = [];
+
+      for (const [key, value] of Object.entries(this.params)) {
+        if (value !== '') {
+          p.push(`${key}=${value}`);
+        } else {
+          p.push(key);
+        }
+      }
+
+      finalEndpoint += p.join('&');
+    }
+
+    return encodeURI(finalEndpoint);
   }
 
   public static from(initialConfiguration?: EndpointOptions): string {

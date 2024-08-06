@@ -40,3 +40,9 @@ export type UserShowProps = {
   inventory: FieldNumericalBoolean;
   formations: FieldNumericalBoolean;
 };
+
+export type UserModelFull = UserModelProps & {
+  notifications: UserNotificationProps;
+} & {
+  show: UserShowProps;
+};

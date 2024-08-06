@@ -69,6 +69,7 @@ export class GenericModule {
   }
 
   private _request(endpoint: EndpointOptions, method: _allowedMethods, body?: any, headers?: any) {
+    console.log(Endpoint.from(endpoint));
     return fetch(Endpoint.from(endpoint), {
       body: body ? JSON.stringify(body) : undefined,
       headers: {
@@ -77,6 +78,7 @@ export class GenericModule {
         ...headers,
       },
       method,
+
     });
   }
 
