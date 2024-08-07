@@ -1,12 +1,12 @@
 import { GenericModule } from "../utils/modular";
-import { GenericAPIError } from "../utils/typings/generic";
+import { GenericAPIError, PaginationOptions } from "../utils/typings/generic";
 import { Pagination } from "../utils/typings/pagination";
 import { UserModelFull } from "../utils/typings/user";
 
 export class SearchModule extends GenericModule {
   public async user(
     alike: string,
-    options: { page?: number; perpage?: number } = { page: 1, perpage: 10 },
+    options: PaginationOptions = { page: 1, perpage: 10 },
   ): Promise<Pagination<UserModelFull> & { error?: GenericAPIError }> {
     const response = await this.r_GET({
       version: 1,

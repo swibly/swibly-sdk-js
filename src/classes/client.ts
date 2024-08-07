@@ -1,6 +1,7 @@
-import { GenericModule } from '../utils/modular';
-import { AuthModule } from './auth';
-import { SearchModule } from './search';
+import { GenericModule } from "../utils/modular";
+import { APIKeyModule } from "./apikey";
+import { AuthModule } from "./auth";
+import { SearchModule } from "./search";
 
 /**
  * Class representing a Swibly API client.
@@ -15,7 +16,12 @@ export class SwiblyClient extends GenericModule {
    */
   public async canConnect(): Promise<boolean> {
     try {
-      return (await this.r_GET({ version: 0, path: 'healthcare' }, { 'X-Lang': this.lang })).ok;
+      return (
+        await this.r_GET(
+          { version: 0, path: "healthcare" },
+          { "X-Lang": this.lang },
+        )
+      ).ok;
     } catch (error) {
       return false;
     }
@@ -34,6 +40,10 @@ export class SwiblyClient extends GenericModule {
   public get search(): SearchModule {
     return new SearchModule({ key: this.key, lang: this.lang });
   }
+
+  public get apikey(): APIKeyModule {
+    return new APIKeyModule({ key: this.key, lang: this.lang });
+  }
 }
 
 /**
@@ -50,9 +60,9 @@ export class SwiblyAPI extends SwiblyClient {
    * @memberof SwiblyAPI
    */
   constructor(key: string) {
-    super({ key, lang: 'pt' });
+    super({ key, lang: "pt" });
     console.warn(
-      'SwiblyAPI is deprecated and will be removed in future versions. Use SwiblyClient instead.',
+      "SwiblyAPI is deprecated and will be removed in future versions. Use SwiblyClient instead.",
     );
   }
 }

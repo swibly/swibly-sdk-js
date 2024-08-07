@@ -1,16 +1,22 @@
-import { FieldNumericalBoolean, ValidAPILanguages } from './generic';
+import { FieldNumericalBoolean, ValidAPILanguages } from "./generic";
 
 /**
  * Represents the properties of a user model.
  */
 export type UserModelProps = {
+  id: number;
+  created_at: string;
+  updated_at: string;
   firstname: string;
   lastname: string;
   username: string;
   bio: string;
   verified: boolean;
+  xp: number;
+  arkhoins: number;
+  followers: number,
+  following: number;
   email: string;
-  password: string;
   country: string;
   language: ValidAPILanguages;
 };
@@ -42,7 +48,7 @@ export type UserShowProps = {
 };
 
 export type UserModelFull = UserModelProps & {
-  notifications: UserNotificationProps;
+  notification: UserNotificationProps;
 } & {
   show: UserShowProps;
 };

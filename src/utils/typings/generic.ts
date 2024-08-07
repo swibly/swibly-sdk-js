@@ -2,7 +2,7 @@
  * Type representing the response from the API.
  * It can be either a successful response with a message or an error response with an error.
  */
-export type GenericAPIReturn = {
+export type GenericAPIResponse = {
   message?: string;
   error?: GenericAPIError;
 };
@@ -11,7 +11,7 @@ export type GenericAPIReturn = {
  * Represents the response from the auth API.
  * It can either contain a message, a token and a success message, or an error message.
  */
-export type GenericTokenAPIReturn = GenericAPIReturn & {
+export type GenericTokenAPIResponse = GenericAPIResponse & {
   /** JWT token resulted from an auth action like login or register. */
   token?: string;
 };
@@ -31,4 +31,9 @@ export type FieldNumericalBoolean = 1 | -1;
 /**
  * Type representing a language that is either pt, en or ru.
  */
-export type ValidAPILanguages = 'pt' | 'en' | 'ru';
+export type ValidAPILanguages = "pt" | "en" | "ru";
+
+export type PaginationOptions = {
+  page?: number;
+  perpage?: number;
+};

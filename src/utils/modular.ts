@@ -1,8 +1,8 @@
-import { Endpoint, EndpointOptions } from './endpoint';
-import { SwiblyClientOptions } from './typings/client';
-import { ValidAPILanguages } from './typings/generic';
+import { Endpoint, EndpointOptions } from "./endpoint";
+import { SwiblyClientOptions } from "./typings/client";
+import { ValidAPILanguages } from "./typings/generic";
 
-type _allowedMethods = 'POST' | 'GET' | 'PATCH' | 'DELETE';
+type _allowedMethods = "POST" | "GET" | "PATCH" | "DELETE";
 
 /**
  * Base class for Swibly API modules.
@@ -10,8 +10,8 @@ type _allowedMethods = 'POST' | 'GET' | 'PATCH' | 'DELETE';
  * @protected
  */
 export class GenericModule {
-  private _key: string = '';
-  private _lang: ValidAPILanguages = 'pt';
+  private _key: string = "";
+  private _lang: ValidAPILanguages = "pt";
 
   /**
    * Creates an instance of the module.
@@ -27,11 +27,11 @@ export class GenericModule {
     const { key, lang } = options;
 
     if (!key || key.trim().length === 0) {
-      throw new Error('Missing API key');
+      throw new Error("Missing API key");
     }
 
     this._key = key;
-    this._lang = lang || 'pt';
+    this._lang = lang || "pt";
   }
 
   /**
@@ -68,33 +68,47 @@ export class GenericModule {
     return this;
   }
 
-  private _request(endpoint: EndpointOptions, method: _allowedMethods, body?: any, headers?: any) {
-    console.log(Endpoint.from(endpoint));
+  private _request(
+    endpoint: EndpointOptions,
+    method: _allowedMethods,
+    body?: any,
+    headers?: Record<string, string>,
+  ) {
     return fetch(Endpoint.from(endpoint), {
       body: body ? JSON.stringify(body) : undefined,
       headers: {
-        'X-API-KEY': this.key,
-        'X-Lang': this.lang,
+        "X-API-KEY": this.key,
+        "X-Lang": this.lang,
         ...headers,
       },
       method,
-
     });
   }
 
-  protected r_POST(endpoint: EndpointOptions, body: any, headers?: Record<string, string>) {
-    return this._request(endpoint, 'POST', body, headers);
+  protected r_POST(
+    endpoint: EndpointOptions,
+    body: any,
+    headers?: Record<string, string>,
+  ) {
+    return this._request(endpoint, "POST", body, headers);
   }
 
   protected r_GET(endpoint: EndpointOptions, headers?: Record<string, string>) {
-    return this._request(endpoint, 'GET', undefined, headers);
+    return this._request(endpoint, "GET", undefined, headers);
   }
 
-  protected r_PATCH(endpoint: EndpointOptions, body: any, headers?: Record<string, string>) {
-    return this._request(endpoint, 'PATCH', body, headers);
+  protected r_PATCH(
+    endpoint: EndpointOptions,
+    body: any,
+    headers?: Record<string, string>,
+  ) {
+    return this._request(endpoint, "PATCH", body, headers);
   }
 
-  protected r_DELETE(endpoint: EndpointOptions, headers?: Record<string, string>) {
-    return this._request(endpoint, 'DELETE', undefined, headers);
+  protected r_DELETE(
+    endpoint: EndpointOptions,
+    headers?: Record<string, string>,
+  ) {
+    return this._request(endpoint, "DELETE", undefined, headers);
   }
 }

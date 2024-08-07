@@ -1,20 +1,20 @@
 import { GenericModule } from '../utils/modular';
 import { UserLoginBody, UserRegisterBody, UserUpdateBody } from '../utils/typings/auth';
-import { GenericAPIReturn, GenericTokenAPIReturn } from '../utils/typings/generic';
+import { GenericAPIResponse, GenericTokenAPIResponse } from '../utils/typings/generic';
 
 export class AuthModule extends GenericModule {
   /**
    * Registers a new user with the provided information.
    *
    * @param {RegisterBody} body - The user's information.
-   * @return {Promise<GenericTokenAPIReturn>} A Promise that resolves to the response from the API.
+   * @return {Promise<GenericTokenAPIResponse>} A Promise that resolves to the response from the API.
    */
-  public async register(body: UserRegisterBody): Promise<GenericTokenAPIReturn> {
+  public async register(body: UserRegisterBody): Promise<GenericTokenAPIResponse> {
     try {
       const response = await this.r_POST({ version: 1, path: 'auth/register' }, body);
-      return (await response.json()) as GenericTokenAPIReturn;
+      return (await response.json()) as GenericTokenAPIResponse;
     } catch (e: any) {
-      return e.response as GenericTokenAPIReturn; // Return the API key error
+      return e.response as GenericTokenAPIResponse; // Return the API key error
     }
   }
 
@@ -22,14 +22,14 @@ export class AuthModule extends GenericModule {
    * Logs in a user with the provided information.
    *
    * @param {LoginBody} body - The user's information.
-   * @return {Promise<GenericTokenAPIReturn>} A Promise that resolves to the response from the API.
+   * @return {Promise<GenericTokenAPIResponse>} A Promise that resolves to the response from the API.
    */
-  public async login(body: UserLoginBody): Promise<GenericTokenAPIReturn> {
+  public async login(body: UserLoginBody): Promise<GenericTokenAPIResponse> {
     try {
       const response = await this.r_POST({ version: 1, path: 'auth/login' }, body);
-      return (await response.json()) as GenericTokenAPIReturn;
+      return (await response.json()) as GenericTokenAPIResponse;
     } catch (e: any) {
-      return e.response as GenericTokenAPIReturn; // Return the API key error
+      return e.response as GenericTokenAPIResponse; // Return the API key error
     }
   }
 
@@ -40,15 +40,15 @@ export class AuthModule extends GenericModule {
    * @param {UpdateBody} body - The user's new information.
    * @return {Promise<ActionReturn>} A Promise that resolves to the response from the API.
    */
-  public async update(token: string, body: UserUpdateBody): Promise<GenericAPIReturn> {
+  public async update(token: string, body: UserUpdateBody): Promise<GenericAPIResponse> {
     try {
       const response = await this.r_PATCH({ version: 1, path: 'auth/update' }, body, {
         Authorization: `Bearer ${token}`,
       });
 
-      return (await response.json()) as GenericAPIReturn;
+      return (await response.json()) as GenericAPIResponse;
     } catch (e: any) {
-      return e.response as GenericAPIReturn; // Return the API key error
+      return e.response as GenericAPIResponse; // Return the API key error
     }
   }
 
@@ -58,7 +58,7 @@ export class AuthModule extends GenericModule {
    * @param {string} token - The user's token.
    * @return {Promise<ActionReturn>} A Promise that resolves to the response from the API.
    */
-  public async delete(token: string): Promise<GenericAPIReturn> {
+  public async delete(token: string): Promise<GenericAPIResponse> {
     try {
       const response = await this.r_DELETE(
         { version: 1, path: 'auth/delete' },
@@ -67,9 +67,9 @@ export class AuthModule extends GenericModule {
         },
       );
 
-      return (await response.json()) as GenericAPIReturn;
+      return (await response.json()) as GenericAPIResponse;
     } catch (e: any) {
-      return e.response as GenericAPIReturn; // Return the API key error
+      return e.response as GenericAPIResponse; // Return the API key error
     }
   }
 }

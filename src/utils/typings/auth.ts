@@ -1,4 +1,5 @@
-import { UserModelProps, UserNotificationProps, UserShowProps } from './user';
+import { ValidAPILanguages } from "./generic";
+import { UserModelProps, UserNotificationProps, UserShowProps } from "./user";
 
 /**
  * Represents the body of a user registration request.
@@ -23,6 +24,16 @@ export type UserLoginBody = {
 /**
  * Represents the body of a user update request.
  */
-export type UserUpdateBody = Partial<UserModelProps> &
-  Partial<UserShowProps> &
-  Partial<UserNotificationProps>;
+export type UserUpdateBody = Partial<{
+  firstname: string;
+  lastname: string;
+  username: string;
+  bio: string;
+  verified: boolean;
+  email: string;
+  password: string;
+  country: string;
+  language: ValidAPILanguages;
+}> & {
+  show?: Partial<UserShowProps>;
+} & { notification?: Partial<UserNotificationProps> };
