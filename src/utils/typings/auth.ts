@@ -1,5 +1,5 @@
-import { ValidAPILanguages } from "./generic";
-import { UserModelProps, UserNotificationProps, UserShowProps } from "./user";
+import { ValidAPILanguages } from './generic';
+import { UserNotificationProps, UserShowProps } from './user';
 
 /**
  * Represents the body of a user registration request.

@@ -11,32 +11,64 @@ export class Endpoint {
   private version = 1;
   private params: Record<string, any> = {};
 
-  constructor(initialConfiguration?: EndpointOptions) {
-    if (initialConfiguration) {
-      Object.assign(this, initialConfiguration);
-    }
+  /**
+   * Initializes a new instance of the {@link Endpoint} class.
+   *
+   * @param {EndpointOptions} [initialConfiguration={}] - The initial configuration for the endpoint.
+   */
+  constructor(initialConfiguration: EndpointOptions = {}) {
+    Object.assign(this, initialConfiguration);
   }
 
+  /**
+   * Sets the path of the endpoint.
+   *
+   * @param {string} path - The path of the endpoint.
+   * @returns {Endpoint} The current instance of the {@link Endpoint} class.
+   */
   public withPath(path: string): Endpoint {
     this.path = path;
     return this;
   }
 
+  /**
+   * Sets the group of the endpoint.
+   *
+   * @param {string} group - The group of the endpoint.
+   * @returns {Endpoint} The current instance of the {@link Endpoint} class.
+   */
   public withGroup(group: string): Endpoint {
     this.group = group;
     return this;
   }
 
+  /**
+   * Sets the version of the endpoint.
+   *
+   * @param {number} version - The version of the endpoint.
+   * @returns {Endpoint} The current instance of the {@link Endpoint} class.
+   */
   public withVersion(version: number): Endpoint {
     this.version = version;
     return this;
   }
 
-  public withParams(params: Record<string, any>) {
+  /**
+   * Sets the parameters of the endpoint.
+   *
+   * @param {Record<string, any>} params - The parameters of the endpoint.
+   * @returns {Endpoint} The current instance of the {@link Endpoint} class.
+   */
+  public withParams(params: Record<string, any>): Endpoint {
     this.params = params;
     return this;
   }
 
+  /**
+   * Gets the options of the endpoint.
+   *
+   * @returns {EndpointOptions} The options of the endpoint.
+   */
   public get options(): EndpointOptions {
     return {
       path: this.path,
@@ -46,6 +78,11 @@ export class Endpoint {
     };
   }
 
+  /**
+   * Builds the endpoint URL.
+   *
+   * @returns {string} The URL of the endpoint.
+   */
   public build(): string {
     const unslash = (str: string) => str.replace(/\/$/, '');
 
@@ -82,7 +119,13 @@ export class Endpoint {
     return encodeURI(finalEndpoint);
   }
 
-  public static from(initialConfiguration?: EndpointOptions): string {
+  /**
+   * Creates a new instance of the {@link Endpoint} class from the given options.
+   *
+   * @param {EndpointOptions} [initialConfiguration={}] - The initial configuration for the endpoint.
+   * @returns {string} The URL of the endpoint.
+   */
+  public static from(initialConfiguration: EndpointOptions = {}): string {
     return new Endpoint(initialConfiguration).build();
   }
 }

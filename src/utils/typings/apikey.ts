@@ -1,5 +1,8 @@
-import { FieldNumericalBoolean } from "./generic";
+import { FieldNumericalBoolean } from './generic';
 
+/**
+ * Represents an API key model.
+ */
 export type APIKeyModel = {
   key: string;
   owner: string;
@@ -12,6 +15,9 @@ export type APIKeyModel = {
   max_usage: number;
 };
 
+/**
+ * Represents an API key update model.
+ */
 export type APIKeyUpdateModel = {
   owner?: string;
   enabled_key_manage?: FieldNumericalBoolean;

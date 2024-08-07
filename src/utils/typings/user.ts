@@ -1,4 +1,4 @@
-import { FieldNumericalBoolean, ValidAPILanguages } from "./generic";
+import { FieldNumericalBoolean, ValidAPILanguages } from './generic';
 
 /**
  * Represents the properties of a user model.
@@ -14,7 +14,7 @@ export type UserModelProps = {
   verified: boolean;
   xp: number;
   arkhoins: number;
-  followers: number,
+  followers: number;
   following: number;
   country: string;
   language: ValidAPILanguages;
@@ -46,6 +46,9 @@ export type UserShowProps = {
   formations: FieldNumericalBoolean;
 };
 
+/**
+ * Represents a full user model, including the notification and visibility settings.
+ */
 export type UserModelFull = UserModelProps & {
   notification: UserNotificationProps;
 } & {

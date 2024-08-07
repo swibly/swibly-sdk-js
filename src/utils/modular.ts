@@ -1,8 +1,8 @@
-import { Endpoint, EndpointOptions } from "./endpoint";
-import { SwiblyClientOptions } from "./typings/client";
-import { ValidAPILanguages } from "./typings/generic";
+import { Endpoint, EndpointOptions } from './endpoint';
+import { SwiblyClientOptions } from './typings/client';
+import { ValidAPILanguages } from './typings/generic';
 
-type _allowedMethods = "POST" | "GET" | "PATCH" | "DELETE";
+type _allowedMethods = 'POST' | 'GET' | 'PATCH' | 'DELETE';
 
 /**
  * Base class for Swibly API modules.
@@ -10,8 +10,8 @@ type _allowedMethods = "POST" | "GET" | "PATCH" | "DELETE";
  * @protected
  */
 export class GenericModule {
-  private _key: string = "";
-  private _lang: ValidAPILanguages = "pt";
+  private _key: string = '';
+  private _lang: ValidAPILanguages = 'pt';
 
   /**
    * Creates an instance of the module.
@@ -27,11 +27,11 @@ export class GenericModule {
     const { key, lang } = options;
 
     if (!key || key.trim().length === 0) {
-      throw new Error("Missing API key");
+      throw new Error('Missing API key');
     }
 
     this._key = key;
-    this._lang = lang || "pt";
+    this._lang = lang || 'pt';
   }
 
   /**
@@ -68,47 +68,91 @@ export class GenericModule {
     return this;
   }
 
+  /**
+   * Sends an HTTP request to the specified endpoint with the given parameters.
+   *
+   * @protected
+   * @param {EndpointOptions} endpoint - The endpoint options.
+   * @param {_allowedMethods} method - The HTTP method to use.
+   * @param {any} [body] - The request body, if applicable.
+   * @param {Record<string, string>} [headers] - Additional headers to include in the request.
+   * @return {Promise<Response>} A promise that resolves to the HTTP response.
+   */
   private _request(
     endpoint: EndpointOptions,
     method: _allowedMethods,
     body?: any,
     headers?: Record<string, string>,
-  ) {
+  ): Promise<Response> {
     return fetch(Endpoint.from(endpoint), {
       body: body ? JSON.stringify(body) : undefined,
       headers: {
-        "X-API-KEY": this.key,
-        "X-Lang": this.lang,
+        'X-API-KEY': this.key,
+        'X-Lang': this.lang,
         ...headers,
       },
       method,
     });
   }
 
+  /**
+   * Sends a POST request to the specified endpoint with the given parameters.
+   *
+   * @protected
+   * @param {EndpointOptions} endpoint - The endpoint options.
+   * @param {any} body - The request body.
+   * @param {Record<string, string>} [headers] - Additional headers to include in the request.
+   * @return {Promise<Response>} A promise that resolves to the HTTP response.
+   */
   protected r_POST(
     endpoint: EndpointOptions,
     body: any,
     headers?: Record<string, string>,
-  ) {
-    return this._request(endpoint, "POST", body, headers);
+  ): Promise<Response> {
+    return this._request(endpoint, 'POST', body, headers);
   }
 
-  protected r_GET(endpoint: EndpointOptions, headers?: Record<string, string>) {
-    return this._request(endpoint, "GET", undefined, headers);
+  /**
+   * Sends a GET request to the specified endpoint with the given parameters.
+   *
+   * @protected
+   * @param {EndpointOptions} endpoint - The endpoint options.
+   * @param {Record<string, string>} [headers] - Additional headers to include in the request.
+   * @return {Promise<Response>} A promise that resolves to the HTTP response.
+   */
+  protected r_GET(endpoint: EndpointOptions, headers?: Record<string, string>): Promise<Response> {
+    return this._request(endpoint, 'GET', undefined, headers);
   }
 
+  /**
+   * Sends a PATCH request to the specified endpoint with the given parameters.
+   *
+   * @protected
+   * @param {EndpointOptions} endpoint - The endpoint options.
+   * @param {any} body - The request body.
+   * @param {Record<string, string>} [headers] - Additional headers to include in the request.
+   * @return {Promise<Response>} A promise that resolves to the HTTP response.
+   */
   protected r_PATCH(
     endpoint: EndpointOptions,
     body: any,
     headers?: Record<string, string>,
-  ) {
-    return this._request(endpoint, "PATCH", body, headers);
+  ): Promise<Response> {
+    return this._request(endpoint, 'PATCH', body, headers);
   }
 
+  /**
+   * Sends a DELETE request to the specified endpoint with the given parameters.
+   *
+   * @protected
+   * @param {EndpointOptions} endpoint - The endpoint options.
+   * @param {Record<string, string>} [headers] - Additional headers to include in the request.
+   * @return {Promise<Response>} A promise that resolves to the HTTP response.
+   */
   protected r_DELETE(
     endpoint: EndpointOptions,
     headers?: Record<string, string>,
-  ) {
-    return this._request(endpoint, "DELETE", undefined, headers);
+  ): Promise<Response> {
+    return this._request(endpoint, 'DELETE', undefined, headers);
   }
 }

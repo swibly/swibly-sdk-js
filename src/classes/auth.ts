@@ -11,7 +11,7 @@ export class AuthModule extends GenericModule {
    */
   public async register(body: UserRegisterBody): Promise<GenericTokenAPIResponse> {
     try {
-      const response = await this.r_POST({ version: 1, path: 'auth/register' }, body);
+      const response = await this.r_POST({ version: 1, group: 'auth', path: 'register' }, body);
       return (await response.json()) as GenericTokenAPIResponse;
     } catch (e: any) {
       return e.response as GenericTokenAPIResponse; // Return the API key error
@@ -26,7 +26,7 @@ export class AuthModule extends GenericModule {
    */
   public async login(body: UserLoginBody): Promise<GenericTokenAPIResponse> {
     try {
-      const response = await this.r_POST({ version: 1, path: 'auth/login' }, body);
+      const response = await this.r_POST({ version: 1, group: 'auth', path: 'login' }, body);
       return (await response.json()) as GenericTokenAPIResponse;
     } catch (e: any) {
       return e.response as GenericTokenAPIResponse; // Return the API key error
@@ -42,7 +42,7 @@ export class AuthModule extends GenericModule {
    */
   public async update(token: string, body: UserUpdateBody): Promise<GenericAPIResponse> {
     try {
-      const response = await this.r_PATCH({ version: 1, path: 'auth/update' }, body, {
+      const response = await this.r_PATCH({ version: 1, group: 'auth', path: 'update' }, body, {
         Authorization: `Bearer ${token}`,
       });
 
@@ -61,7 +61,7 @@ export class AuthModule extends GenericModule {
   public async delete(token: string): Promise<GenericAPIResponse> {
     try {
       const response = await this.r_DELETE(
-        { version: 1, path: 'auth/delete' },
+        { version: 1, group: 'auth', path: 'delete' },
         {
           Authorization: `Bearer ${token}`,
         },
@@ -71,5 +71,20 @@ export class AuthModule extends GenericModule {
     } catch (e: any) {
       return e.response as GenericAPIResponse; // Return the API key error
     }
+  }
+
+  /**
+   * Validates if the provided token is valid.
+   *
+   * @param {string} token - The user's token.
+   * @return {Promise<boolean>} A Promise that resolves to a boolean indicating if the token is valid.
+   */
+  public async isValid(token: string): Promise<boolean> {
+    return (
+      await this.r_GET(
+        { version: 1, group: 'auth', path: 'validate' },
+        { Authorization: `Bearer ${token}` },
+      )
+    ).ok;
   }
 }

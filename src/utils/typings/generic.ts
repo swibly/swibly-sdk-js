@@ -36,7 +36,7 @@ export type FieldNumericalBoolean = 1 | -1;
 /**
  * Type representing a language that is either pt, en or ru.
  */
-export type ValidAPILanguages = "pt" | "en" | "ru";
+export type ValidAPILanguages = 'pt' | 'en' | 'ru';
 
 export type PaginationOptions = {
   page?: number;
