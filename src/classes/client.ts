@@ -2,6 +2,7 @@ import { GenericModule } from "../utils/modular";
 import { APIKeyModule } from "./apikey";
 import { AuthModule } from "./auth";
 import { SearchModule } from "./search";
+import { UserModule } from "./user";
 
 /**
  * Class representing a Swibly API client.
@@ -43,6 +44,14 @@ export class SwiblyClient extends GenericModule {
 
   public get apikey(): APIKeyModule {
     return new APIKeyModule({ key: this.key, lang: this.lang });
+  }
+
+  public user(username: string, token: string = ""): UserModule {
+    if (username.trim() === '') {
+      throw new Error("Username cannot be null");
+    }
+
+    return new UserModule(username, token, { key: this.key, lang: this.lang });
   }
 }
 

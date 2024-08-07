@@ -7,6 +7,11 @@ export type GenericAPIResponse = {
   error?: GenericAPIError;
 };
 
+export type GenericAPIResponseSimplified = {
+  message?: string;
+  error?: string;
+};
+
 /**
  * Represents the response from the auth API.
  * It can either contain a message, a token and a success message, or an error message.

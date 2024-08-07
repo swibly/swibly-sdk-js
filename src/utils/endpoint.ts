@@ -37,6 +37,15 @@ export class Endpoint {
     return this;
   }
 
+  public get options(): EndpointOptions {
+    return {
+      path: this.path,
+      group: this.group,
+      version: this.version,
+      params: this.params,
+    };
+  }
+
   public build(): string {
     const unslash = (str: string) => str.replace(/\/$/, '');
 

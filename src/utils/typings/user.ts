@@ -16,7 +16,6 @@ export type UserModelProps = {
   arkhoins: number;
   followers: number,
   following: number;
-  email: string;
   country: string;
   language: ValidAPILanguages;
 };
